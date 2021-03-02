@@ -23,6 +23,7 @@ class User extends Authenticatable
         "personaname",
         "avatar",
         "steamid",
+        "competitive_rank",
         "username"
     ];
 
@@ -44,4 +45,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role(){
+        return $this->belongsToMany(Role::class);
+    }
 }

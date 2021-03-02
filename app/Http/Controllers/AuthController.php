@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 use Invisnik\LaravelSteamAuth\SteamAuth;
 use App\Models\User;
 use Auth;
@@ -80,7 +82,9 @@ class AuthController extends Controller
         return User::create([
             'username' => $info->personaname,
             'avatar' => $info->avatarfull,
-            'steamid' => $info->steamID64
+            'steamid' => $info->steamID64,
+
         ]);
     }
+
 }

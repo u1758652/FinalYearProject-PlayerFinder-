@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('username')->nullable();
             $table->string('avatar')->nullable();
             $table->string('steamid')->unique()->nullable();
+            $table->bigInteger('competitive_rank')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();

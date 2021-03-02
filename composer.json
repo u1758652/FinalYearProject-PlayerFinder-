@@ -11,9 +11,10 @@
         "php": "^7.3|^8.0",
         "fideloper/proxy": "^4.4",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "guzzlehttp/guzzle": "^7.2",
+        "illuminate/support": "^v8.28.1",
         "invisnik/laravel-steam-auth": "^4.3",
-        "laravel/framework": "^8.12",
+        "laravel/framework": "^v8.27.0",
         "laravel/socialite": "^5.1",
         "laravel/tinker": "^2.5",
         "truckersmp/steam-socialite": "^1.3"

@@ -11,7 +11,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    
+
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 </head>
@@ -44,7 +44,7 @@
                 </nav>
             </div>
         </header>
-
+        @yield('players')
         @yield('content')
     </div>
 </body>
