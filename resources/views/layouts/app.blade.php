@@ -31,7 +31,8 @@
                             <a class="no-underline hover:underline" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
                     @else
-                        <span>{{ Auth::user()->name }}</span>
+                        <a href="/players/{{Auth::user()->id}}/edit">{{ Auth::user()->username }}</a>
+                        <span></span>
 
                         <a href="{{ route('logout') }}"
                            class="no-underline hover:underline"
@@ -45,6 +46,9 @@
             </div>
         </header>
         @yield('players')
+        @yield('playershow')
+        @yield('playerprofile')
+        @yield('playersearch')
         @yield('content')
     </div>
 </body>

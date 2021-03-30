@@ -21,9 +21,17 @@ Auth::routes();
 Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
+Route::get("/players/search","App\Http\Controllers\PlayerController@search");
+
 Route::get('auth/steam', '\App\Http\Controllers\AuthController@redirectToSteam')->name('auth.steam');
 Route::get('auth/steam/handle', '\App\Http\Controllers\AuthController@handle')->name('auth.steam.handle');
 
-//Route::get("/players", 'App\Http\Controllers\PlayerController@getUserMmmrById');
 Route::get("/players", 'App\Http\Controllers\PlayerController@index');
+Route::get("/players/{player}",'App\Http\Controllers\PlayerController@show');
+
+Route::get("/players/{player}/edit", 'App\Http\Controllers\PlayerController@edit');
+Route::put("/players/{player}", 'App\Http\Controllers\PlayerController@update');
+
+
+
 

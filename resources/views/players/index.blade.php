@@ -1,12 +1,40 @@
 <!DOCTYPE html>
 @extends('layouts.app')
 @section('players')
-<div>
-@foreach($players as $player)
-    <img src="{{$player->avatar}}">
-    {{$player->username}}
-    MMR: {{$player->competitive_rank}}
-    @endforeach
-</div>
+    <div class="flex">
+        <aside class="h-screen sticky top-0 bg-gray-300">
+            <form action="/players/search" method="GET">
+                @csrf
+                <p>Search by name</p>
+                <p><input type="text" name="search" /></p>
+                <p>Search by min MMR</p>
+                <p><input type="number" name="minMMR" value="0" /></p>
+                <p>Search by max MMR</p>
+                <p><input type="number" name="maxMMR" value="10000"/></p>
+                <p>Search by role</p>
+                <p><select name="roles">
+                        <option value=""></option>
+                         @foreach($roles as $role)
+                             <option value="{{$role->name}}">{{$role->name}}</option>
+                         @endforeach
+                     </select></p>
 
+                <input type="submit" class="btn btn-sm btn-primary"/>
+
+            </form>
+        </aside>
+        <main>
+            <div>
+                @foreach($players as $player)
+                    <img src="{{$player->avatar}}">
+                    <a href="/players/{{$player->id}}">{{$player->username}}</a>
+                    MMR: {{$player->competitive_rank}}
+                    <p>Roles: @foreach($player -> role as $role)
+                            {{$role->name}}
+                        @endforeach</p>
+                @endforeach
+
+            </div>
+        </main>
+    </div>
 @endsection

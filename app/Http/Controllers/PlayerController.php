@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
@@ -12,6 +13,9 @@ class PlayerController extends Controller
 
     public function index()
     {
+
+        $roles= Role::latest()->get();
+
         $players = User::latest()->get();
 
         $user=Auth::user();
@@ -22,7 +26,7 @@ class PlayerController extends Controller
 
         $user->save();
 
-        return view("players.index", compact("players","competitiveRank"));
+        return view("players.index", compact("players","competitiveRank","roles"));
 
     }
 
@@ -33,25 +37,33 @@ class PlayerController extends Controller
 
     public function store(Request $request)
     {
-        //
+
     }
 
 
-    public function show($id)
+    public function show(User $player)
     {
-        //
+
+        return view("players.show",compact("player"));
     }
 
 
-    public function edit($id)
+
+
+    public function edit(User $player)
     {
-        //
+       $roles = Role::all();
+
+       return view("players.edit", compact("player"), ["roles"=>Role::all()]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(User $player)
     {
-        //
+        $player->role()->attach(\request("roles"));
+        $player->update();
+
+        return redirect("/players");
     }
 
 
@@ -82,5 +94,27 @@ class PlayerController extends Controller
             return $competitiveRank;
         }
 
+    }
+
+    function search(Request $request)
+    {
+        $nameReq = $request->input("search");
+        $roleReq = $request->input("roles");
+        $minMMRReq = $request->input("minMMR");
+        $maxMMRReq = $request->input("maxMMR");
+
+        $players = User::query()
+            ->where("username","LIKE","%$nameReq%")
+            ->whereHas("role", function ($query) use($roleReq){
+                if ($roleReq == ""){
+                    $query->where("name","!=", $roleReq);
+                }else{
+                    $query->where("name",$roleReq);
+                }
+            })
+            ->whereBetween("competitive_rank",[$minMMRReq,$maxMMRReq])
+            ->get();
+
+        return view("players.search",compact("players"));
     }
 }

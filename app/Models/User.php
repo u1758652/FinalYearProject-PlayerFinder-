@@ -24,7 +24,8 @@ class User extends Authenticatable
         "avatar",
         "steamid",
         "competitive_rank",
-        "username"
+        "username",
+        "roles"
     ];
 
     /**
