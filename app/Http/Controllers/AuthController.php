@@ -22,7 +22,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectURL = '/';
+    protected $redirectURL = '/players';
 
     /**
      * AuthController constructor.

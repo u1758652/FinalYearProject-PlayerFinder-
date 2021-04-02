@@ -26,6 +26,9 @@ Route::get("/players/search","App\Http\Controllers\PlayerController@search");
 Route::get('auth/steam', '\App\Http\Controllers\AuthController@redirectToSteam')->name('auth.steam');
 Route::get('auth/steam/handle', '\App\Http\Controllers\AuthController@handle')->name('auth.steam.handle');
 
+Route::post("/players/{player}/like","App\Http\Controllers\PlayerLikesController@store");
+Route::delete("/players/{player}/like","App\Http\Controllers\PlayerLikesController@destroy");
+
 Route::get("/players", 'App\Http\Controllers\PlayerController@index');
 Route::get("/players/{player}",'App\Http\Controllers\PlayerController@show');
 

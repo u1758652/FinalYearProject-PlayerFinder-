@@ -8,6 +8,7 @@ use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class PlayerController extends Controller
 {
 
@@ -94,6 +95,15 @@ class PlayerController extends Controller
             return $competitiveRank;
         }
 
+    }
+
+    public function toggleLike(User $player)
+    {
+        $currentPlayer = Auth::user();
+
+        $currentPlayer->likes()->toggle($player->id);
+
+        return back();
     }
 
     function search(Request $request)
