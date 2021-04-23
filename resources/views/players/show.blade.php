@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 @extends("layouts.app")
 @section("playershow")
-
     <div>
         {{$player->username}}
 
@@ -10,5 +9,12 @@
         @endforeach
 
     </div>
+<div>
+    <form method="POST" action="/players/{{$player->id}}">
+        @csrf
+        <input type="text" name="message">
+        <button type="submit">Send</button>
+    </form>
 
+</div>
 @endsection

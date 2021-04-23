@@ -17,7 +17,8 @@
                          @foreach($roles as $role)
                              <option value="{{$role->name}}">{{$role->name}}</option>
                          @endforeach
-                     </select></p>
+                     </select>
+                </p>
 
                 <input type="submit" class="btn btn-sm btn-primary"/>
 

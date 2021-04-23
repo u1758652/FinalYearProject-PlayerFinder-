@@ -22,18 +22,25 @@ Route::get('/home', [\App\Http\Controllers\HomeController::class, 'index'])->nam
 
 
 Route::get("/players/search","App\Http\Controllers\PlayerController@search");
+Route::get("players/{player}/messages",'App\Http\Controllers\MessageController@retrieveMessages');
+Route::get("players/{player}/showconvo",'App\Http\Controllers\MessageController@retrieveConversation');
 
-Route::get('auth/steam', '\App\Http\Controllers\AuthController@redirectToSteam')->name('auth.steam');
-Route::get('auth/steam/handle', '\App\Http\Controllers\AuthController@handle')->name('auth.steam.handle');
+Route::get('auth/steam','\App\Http\Controllers\AuthController@redirectToSteam')->name('auth.steam');
+Route::get('auth/steam/handle','\App\Http\Controllers\AuthController@handle')->name('auth.steam.handle');
 
 Route::post("/players/{player}/like","App\Http\Controllers\PlayerLikesController@store");
 Route::delete("/players/{player}/like","App\Http\Controllers\PlayerLikesController@destroy");
 
+Route::post("/players/{player}", 'App\Http\Controllers\MessageController@forwardMessage');
+
+
 Route::get("/players", 'App\Http\Controllers\PlayerController@index');
 Route::get("/players/{player}",'App\Http\Controllers\PlayerController@show');
 
-Route::get("/players/{player}/edit", 'App\Http\Controllers\PlayerController@edit');
-Route::put("/players/{player}", 'App\Http\Controllers\PlayerController@update');
+Route::get("/players/{player}/edit",'App\Http\Controllers\PlayerController@edit');
+Route::put("/players/{player}",'App\Http\Controllers\PlayerController@update');
+
+
 
 
 

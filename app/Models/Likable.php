@@ -38,21 +38,6 @@ trait Likable
         );
     }
 
-    public function isLikedBy(User $user){
-        return (bool)$user->likes()
-            ->where("likee_id",$this->id)
-            ->where("liked", true)
-            ->count();
-    }
-
-    public function isDislikedBy(User $user){
-        return (bool)$user->likes()
-            ->where("likee_id",$this->id)
-            ->where("liked", false)
-            ->count();
-    }
-
-
     public function likes(){
         return $this->hasMany(Like::class);
     }

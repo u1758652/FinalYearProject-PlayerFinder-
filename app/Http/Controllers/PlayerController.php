@@ -94,16 +94,6 @@ class PlayerController extends Controller
         }else{
             return $competitiveRank;
         }
-
-    }
-
-    public function toggleLike(User $player)
-    {
-        $currentPlayer = Auth::user();
-
-        $currentPlayer->likes()->toggle($player->id);
-
-        return back();
     }
 
     function search(Request $request)

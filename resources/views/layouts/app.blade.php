@@ -49,7 +49,9 @@
         @yield('playershow')
         @yield('playerprofile')
         @yield('playersearch')
+        @yield('playermessages')
         @yield('content')
+        @yield('convo')
     </div>
 </body>
 </html>

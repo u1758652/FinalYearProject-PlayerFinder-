@@ -56,6 +56,23 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class);
     }
 
+    public function sent()
+    {
+        return $this->hasMany(Message::class, 'sender_id');
+    }
 
+    public function received()
+    {
+        return $this->hasMany(Message::class, 'receiver_id');
+    }
+
+
+    public function forwardMessageTo($recipient, $message)
+    {
+        return $this->sent()->create([
+            'receiver_id' => $recipient,
+            'text' => $message,
+        ]);
+    }
 
 }

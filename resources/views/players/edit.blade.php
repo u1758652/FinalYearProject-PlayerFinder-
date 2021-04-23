@@ -15,6 +15,10 @@
                 <div>
                     <button type="submit">Submit</button>
                 </div>
+
+                <div>
+                    <a href="/players/{{$player->id}}/messages">My Conversations</a>
+                </div>
     </div>
 
 @endsection
