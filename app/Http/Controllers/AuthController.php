@@ -32,6 +32,7 @@ class AuthController extends Controller
     public function __construct(SteamAuth $steam)
     {
         $this->steam = $steam;
+        //$this->middleware("isBanned");
     }
 
     /**
@@ -51,16 +52,28 @@ class AuthController extends Controller
      */
     public function handle()
     {
+
         if ($this->steam->validate()) {
+
             $info = $this->steam->getUserInfo();
 
-            if (!is_null($info)) {
+            $trashedUser = User::withTrashed()->where('steamid', $info->steamID64)->first();
+
+            $message = "You have been banned for inappropriate behaviour. And can no longer login";
+
+            if (!is_null($info) && !$trashedUser->trashed()) {
                 $user = $this->findOrNewUser($info);
 
                 Auth::login($user, true);
 
                 return redirect($this->redirectURL); // redirect to site
+
+            }else{
+
+                return redirect("/login")->with("status", $message); //redirect to login page if user is banned
+
             }
+
         }
         return $this->redirectToSteam();
     }
@@ -79,11 +92,11 @@ class AuthController extends Controller
             return $user;
         }
 
+
         return User::create([
             'username' => $info->personaname,
             'avatar' => $info->avatarfull,
             'steamid' => $info->steamID64,
-
         ]);
     }
 

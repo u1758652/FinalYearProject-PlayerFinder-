@@ -7,6 +7,7 @@ use App\Models\User;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class PlayerController extends Controller
@@ -17,7 +18,7 @@ class PlayerController extends Controller
 
         $roles= Role::latest()->get();
 
-        $players = User::latest()->get();
+        $players = User::paginate(10);
 
         $user=Auth::user();
 
@@ -113,7 +114,7 @@ class PlayerController extends Controller
                 }
             })
             ->whereBetween("competitive_rank",[$minMMRReq,$maxMMRReq])
-            ->get();
+            ->paginate(10);
 
         return view("players.search",compact("players"));
     }

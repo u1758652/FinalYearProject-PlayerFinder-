@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          \App\Models\Role::factory(5)->create();
-         \App\Models\User::factory(10)->create();
+         \App\Models\User::factory(100)->create();
 
          $roles = \App\Models\Role::all();
 
@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
                 $roles->random(rand(1, 3))->pluck('id')->toArray()
             );
         });
-            //Foods::factory(10)->has(Tag::factory()->count(3))->create();
+
     }
 }
 

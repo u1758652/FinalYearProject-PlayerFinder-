@@ -69,6 +69,7 @@
                 @endforeach
 
             </div>
+            {{ $players->links() }}
         </main>
     </div>
 @endsection

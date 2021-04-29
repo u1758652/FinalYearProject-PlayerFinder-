@@ -12,7 +12,10 @@
             @endforeach
 
         </div>
-
         @endforeach
+
     </div>
+            {{$players->withQueryString()->links()}}
+
+
 @endsection
