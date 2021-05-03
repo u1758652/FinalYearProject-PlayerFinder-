@@ -15,7 +15,7 @@
         @endforeach
 
     </div>
-            {{$players->withQueryString()->links()}}
 
+    <footer class="position-absolute">{{ $players->withQueryString()->links() }}</footer>
 
 @endsection

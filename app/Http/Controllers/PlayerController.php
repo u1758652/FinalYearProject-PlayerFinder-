@@ -18,7 +18,7 @@ class PlayerController extends Controller
 
         $roles= Role::latest()->get();
 
-        $players = User::paginate(10);
+        $players = User::paginate(5);
 
         $user=Auth::user();
 
@@ -82,19 +82,20 @@ class PlayerController extends Controller
 
     function getCurrentUserMMR()
     {
-        $steamid = Auth::user()->steamid;
-        $opendotaid=$this->convert_steamid_64bit_to_32bit($steamid);
 
-        $client = new Client();
-        $request = $client->get("https://api.opendota.com/api/players/$opendotaid");
-        $response = json_decode($request->getBody()->getContents(),true);
-        $competitiveRank = json_encode($response["competitive_rank"]);
+                $steamid = Auth::user()->steamid;
+                $opendotaid=$this->convert_steamid_64bit_to_32bit($steamid);
 
-        if ($competitiveRank == "null"){
-            return 0;
-        }else{
-            return $competitiveRank;
-        }
+                $client = new Client();
+                $request = $client->get("https://api.opendota.com/api/players/$opendotaid");
+                $response = json_decode($request->getBody()->getContents(),true);
+                $competitiveRank = json_encode($response["competitive_rank"]);
+
+                if ($competitiveRank == "null"){
+                    return 0;
+                }else{
+                    return $competitiveRank;
+                }
     }
 
     function search(Request $request)

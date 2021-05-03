@@ -25,7 +25,7 @@
             </form>
         </aside>
         <main>
-            <div>
+            <div class="min-vh-100">
                 @foreach($players as $player)
                     <img src="{{$player->avatar}}">
                     <a href="/players/{{$player->id}}">{{$player->username}}</a>
@@ -69,7 +69,11 @@
                 @endforeach
 
             </div>
-            {{ $players->links() }}
         </main>
+        <footer class="position-absolute">{{ $players->links() }}</footer>
     </div>
+
+
+
+
 @endsection

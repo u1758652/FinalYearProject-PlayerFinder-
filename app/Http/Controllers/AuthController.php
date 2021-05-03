@@ -32,7 +32,6 @@ class AuthController extends Controller
     public function __construct(SteamAuth $steam)
     {
         $this->steam = $steam;
-        //$this->middleware("isBanned");
     }
 
     /**
@@ -52,28 +51,36 @@ class AuthController extends Controller
      */
     public function handle()
     {
-
         if ($this->steam->validate()) {
 
             $info = $this->steam->getUserInfo();
 
+            $user = $this->findOrNewUser($info);
+
             $trashedUser = User::withTrashed()->where('steamid', $info->steamID64)->first();
 
-            $message = "You have been banned for inappropriate behaviour. And can no longer login";
+            $message = "You have been banned for inappropriate behaviour and can no longer login";
 
-            if (!is_null($info) && !$trashedUser->trashed()) {
+            if ($user->deleted_at != null){
+
+                return redirect("/login")->with("status", $message); //redirect to login page if user is banned
+
+            }elseif (!is_null($info) && !$trashedUser->trashed()){
+
                 $user = $this->findOrNewUser($info);
 
                 Auth::login($user, true);
 
                 return redirect($this->redirectURL); // redirect to site
-
-            }else{
-
-                return redirect("/login")->with("status", $message); //redirect to login page if user is banned
-
             }
+            elseif(!is_null($info)){
 
+                $user = $this->findOrNewUser($info);
+
+                Auth::login($user, true);
+
+                return redirect($this->redirectURL); // redirect to site
+            }
         }
         return $this->redirectToSteam();
     }
@@ -88,12 +95,11 @@ class AuthController extends Controller
     {
         $user = User::where('steamid', $info->steamID64)->first();
 
-        if (!is_null($user)) {
+        if (!is_null($user)  ) {
             return $user;
         }
 
-
-        return User::create([
+        return User::withTrashed()->firstOrCreate([
             'username' => $info->personaname,
             'avatar' => $info->avatarfull,
             'steamid' => $info->steamID64,
